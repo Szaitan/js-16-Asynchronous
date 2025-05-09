@@ -18,6 +18,9 @@ const getCountryData = function (country) {
     console.log(data);
 
     if (!data.borders[0]) return;
+    // What we see it is called a callback hell
+    // If we would have many vallbacks the shape would be of a tree
+    // That is a bad pratice for the code
 
     // First country neighbour
     const request2 = new XMLHttpRequest();
