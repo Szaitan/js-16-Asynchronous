@@ -37,7 +37,7 @@ const getCountryData = function (country) {
     });
   });
 };
-
+// test
 const renderCountry = function (data, neighbour = '') {
   const html = `<article class="country ${neighbour}">
             <img class="country__img" src="${data.flag}" />
