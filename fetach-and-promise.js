@@ -7,5 +7,6 @@ const countriesContainer = document.querySelector('.countries');
 // In ES6 the whole part of asyn data was replaced using fetch,
 // which is works based on promise cycle
 
+// For simple GET we dont need to pass it as parameter
 const request = fetch(`https://restcountries.com/v2/name/poland`);
 console.log(request);
