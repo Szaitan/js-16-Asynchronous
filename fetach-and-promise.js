@@ -18,7 +18,7 @@ const getCountyData = function (country) {
   // method .then is called on promise that fullfield condition
   // first thing is in callback to call json method on which works in async mode
   // thats why we have to use another .then method on it
-  const data = request
+  request
     .then(response => response.json())
     .then(data => renderCountry(data[0]));
 };
