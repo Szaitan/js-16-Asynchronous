@@ -20,7 +20,15 @@ const getCountyData = function (country) {
   // thats why we have to use another .then method on it
   request
     .then(response => response.json())
-    .then(data => renderCountry(data[0]));
+    .then(data => {
+      renderCountry(data[0]);
+      const neighbour = data[0]?.borders[0];
+
+      // Here we start chain of promises instead of callback hell
+      return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
+    })
+    .then(response2 => response2.json())
+    .then(data => renderCountry(data, 'neighbour'));
 };
 
 // Function to render country

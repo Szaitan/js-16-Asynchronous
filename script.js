@@ -22,7 +22,7 @@ const getCountryData = function (country) {
     // If we would have many vallbacks the shape would be of a tree
     // That is a bad pratice for the code
 
-    // First country neighbour
+    // Firsts country neighbour
     const request2 = new XMLHttpRequest();
     request2.open(
       'GET',
@@ -32,7 +32,7 @@ const getCountryData = function (country) {
 
     request2.addEventListener(`load`, function () {
       const data2 = JSON.parse(request2.responseText);
-      // First country neighbour render
+      // Firsts country neighbour render
       renderCountry(data2, 'neighbour');
     });
   });
