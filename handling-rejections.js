@@ -8,34 +8,58 @@ const countriesContainer = document.querySelector('.countries');
 
 // First
 // We can pass second fucntion in .then method
+// However this is not optimal way and is cluncky to add everytime function to each .then method
+
+// const getCountryData = function (country) {
+//   const request = fetch(`https://restcountries.com/v2/name/${country}`);
+//   request
+//     .then(
+//       response => response.json(),
+//       err => alert(err)
+//     )
+//     .then(data => {
+//       renderCountry(data[0]);
+//       const neighbour = data[0]?.borders[0];
+//       return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
+//     })
+//     .then(
+//       response2 => response2.json(),
+//       err => alert(err)
+//     )
+//     .then(data => renderCountry(data, 'neighbour'));
+// };
+
+// Second way is to add .catch method
+// This metod is called whenever there is an error occuring with internet connection.
+// Catch is called when there is problem with conenction to return promise.
+
+// There is also another way which is .finallyy method
+// This method is called when all previous methods are fullield. Even catch which in correct situation return promise.
+
 const getCountryData = function (country) {
   const request = fetch(`https://restcountries.com/v2/name/${country}`);
   request
-    .then(
-      response => response.json(),
-      err => alert(err)
-    )
+    .then(response => response.json())
     .then(data => {
       renderCountry(data[0]);
       const neighbour = data[0]?.borders[0];
       return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
     })
     .then(response2 => response2.json())
-    .then(data => renderCountry(data, 'neighbour'));
+    .then(data => renderCountry(data, 'neighbour'))
+    .catch(function (err) {
+      console.error(`${err} bla bla bla`);
+      renderErrorMessage(`Something went wrong. ${err.message}. Try again!`);
+    })
+    .finally(function () {
+      countriesContainer.style.opacity = 1;
+    });
 };
 
-// const getCountyData = function (country) {
-//   const request = fetch(`https://restcountries.com/v2/name/${country}`);
-//   request
-//     .then(response => response.json())
-//     .then(data => {
-//       renderCountry(data[0]);
-//       const neighbour = data[0]?.borders[0];
-//       return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
-//     })
-//     .then(response2 => response2.json())
-//     .then(data => renderCountry(data, 'neighbour'));
-// };
+// Render error message
+const renderErrorMessage = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+};
 
 // Function to render country
 const renderCountry = function (data, neighbour = '') {
@@ -56,7 +80,6 @@ const renderCountry = function (data, neighbour = '') {
             </div>
           </article>`;
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1;
 };
 
 // Adding event to the button
