@@ -39,7 +39,9 @@ const countriesContainer = document.querySelector('.countries');
 const getCountryData = function (country) {
   const request = fetch(`https://restcountries.com/v2/name/${country}`);
   request
-    .then(response => response.json())
+    .then(response => {
+      response.json();
+    })
     .then(data => {
       renderCountry(data[0]);
       const neighbour = data[0]?.borders[0];
@@ -84,7 +86,7 @@ const renderCountry = function (data, neighbour = '') {
 
 // Adding event to the button
 btn.addEventListener('click', function () {
-  getCountryData('poland');
+  getCountryData('gsasad');
 });
 
 // Calling function
