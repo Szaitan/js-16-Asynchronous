@@ -8,23 +8,25 @@ const countriesContainer = document.querySelector('.countries');
 // Also we can throw errors manually by throwing new erros
 const getJSON = function (url, errorMsg = 'Something went wrong') {
   return fetch(url).then(response => {
-    console.log(response);
     if (!response.ok) throw new Error(`${errorMsg} ${response.status}`);
     return response.json();
   });
 };
 
 const getCountryData = function (country) {
-  getJSON(`https://restcountries.com/v2/name/${country}`)
+  getJSON(`https://restcountries.com/v2/name/${country}`, 'Country not found')
     .then(data => {
       renderCountry(data[0]);
-      const neighbour = data[0]?.borders[0];
-      return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
+      const neighbour = data[0]?.borders?.[0];
+
+      if (!neighbour) throw new Error('There is no neighbour country!');
+      return getJSON(
+        `https://restcountries.com/v2/alpha/${neighbour}`,
+        'Country not found'
+      );
     })
-    .then(response2 => response2.json())
     .then(data => renderCountry(data, 'neighbour'))
     .catch(function (err) {
-      console.error(`${err} bla bla bla`);
       renderErrorMessage(`Something went wrong. ${err.message}.`);
     })
     .finally(function () {
@@ -60,5 +62,5 @@ const renderCountry = function (data, neighbour = '') {
 
 // Adding event to the button
 btn.addEventListener('click', function () {
-  getCountryData('poland');
+  getCountryData('australia');
 });
