@@ -6,18 +6,16 @@ const countriesContainer = document.querySelector('.countries');
 ///////////////////////////////////////
 // We have to make our code more readable and not so repetitive
 // Also we can throw errors manually by throwing new erros
-const getData = function (country, errorMsg = 'Something went wrong') {
-  return fetch(`https://restcountries.com/v2/name/${country}`).then(
-    response => {
-      console.log(response);
-      if (!response.ok) throw new Error(`${errorMsg} ${response.status}`);
-      return response.json();
-    }
-  );
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(response => {
+    console.log(response);
+    if (!response.ok) throw new Error(`${errorMsg} ${response.status}`);
+    return response.json();
+  });
 };
 
 const getCountryData = function (country) {
-  getData(country)
+  getJSON(`https://restcountries.com/v2/name/${country}`)
     .then(data => {
       renderCountry(data[0]);
       const neighbour = data[0]?.borders[0];
