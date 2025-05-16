@@ -4,13 +4,20 @@ const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
 ///////////////////////////////////////
+// We have to make our code more readable and not so repetitive
+// Also we can throw errors manually by throwing new erros
+const getData = function (country, errorMsg = 'Something went wrong') {
+  return fetch(`https://restcountries.com/v2/name/${country}`).then(
+    response => {
+      console.log(response);
+      if (!response.ok) throw new Error(`${errorMsg} ${response.status}`);
+      return response.json();
+    }
+  );
+};
 
 const getCountryData = function (country) {
-  const request = fetch(`https://restcountries.com/v2/name/${country}`);
-  request
-    .then(response => {
-      response.json();
-    })
+  getData(country)
     .then(data => {
       renderCountry(data[0]);
       const neighbour = data[0]?.borders[0];
@@ -20,7 +27,7 @@ const getCountryData = function (country) {
     .then(data => renderCountry(data, 'neighbour'))
     .catch(function (err) {
       console.error(`${err} bla bla bla`);
-      renderErrorMessage(`Something went wrong. ${err.message}. Try again!`);
+      renderErrorMessage(`Something went wrong. ${err.message}.`);
     })
     .finally(function () {
       countriesContainer.style.opacity = 1;
@@ -55,5 +62,5 @@ const renderCountry = function (data, neighbour = '') {
 
 // Adding event to the button
 btn.addEventListener('click', function () {
-  getCountryData('gsasad');
+  getCountryData('poland');
 });
