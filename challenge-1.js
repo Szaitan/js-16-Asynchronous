@@ -10,6 +10,8 @@ function whereAmI(lat, lng) {
     `https://geocode.xyz/${lat},${lng}?geoit=json&auth=${geocodeCode}`
   )
     .then(response => {
+      // what is important here is that we are checking the direct response from the server
+      // Thats hy we cant use json method here
       if (!response.ok)
         throw new Error(
           `There was to many calls in 1 second. ${response.status}`
@@ -82,5 +84,5 @@ const renderCountry = function (data, neighbour = '') {
 
 // Adding event to the button
 btn.addEventListener('click', function () {
-  whereAmI(52.508, 13.38);
+  whereAmI(52.508, 135673.38);
 });
