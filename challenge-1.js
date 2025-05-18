@@ -11,7 +11,9 @@ function whereAmI(lat, lng) {
   )
     .then(response => {
       // what is important here is that we are checking the direct response from the server
-      // Thats hy we cant use json method here
+      // Thats why we cant use json method before we check the status of response
+      // we return prepared json data after the status is checked
+
       if (!response.ok)
         throw new Error(
           `There was to many calls in 1 second. ${response.status}`
