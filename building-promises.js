@@ -6,6 +6,12 @@ const lotteryPromise = new Promise(function (resolve, reject) {
   if (Math.random() >= 0.5) {
     resolve('YOU win !!!');
   } else {
-    ('YOU lost !!!');
+    reject(new Error('YOU lost !!!'));
   }
 });
+
+lotteryPromise
+  .then(res => {
+    console.log(res);
+  })
+  .catch(err => console.log(err));
