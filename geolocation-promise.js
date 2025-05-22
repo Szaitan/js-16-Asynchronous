@@ -15,6 +15,7 @@ const getPosition = function () {
 function whereAmI() {
   getPosition()
     .then(response => {
+      // We have to remember to return the fetch
       return fetch(
         `https://geocode.xyz/${response.coords.latitude},${response.coords.longitude}?geoit=json&auth=${geocodeCode}`
       );
