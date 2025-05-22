@@ -34,3 +34,16 @@ wait(2).then(() => {
   console.log('I waited for 2 seconds.');
   return wait(1).then(() => console.log('I waited for 1 second'));
 });
+
+function getUserPromise(id) {
+  return new Promise(function (resolve, reject) {
+    if (typeof id !== 'number') reject(new Error('This is not a number'));
+    setTimeout(() => {
+      resolve({ id, name: 'Marta', age: 28 });
+    }, 1500);
+  });
+}
+
+getUserPromise(45)
+  .then(data => console.log(`This is working!`, data))
+  .catch(err => console.log(err));
