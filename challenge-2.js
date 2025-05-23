@@ -20,8 +20,16 @@ createImage('img/img-1.jpg')
   .then(resolve => {
     resolve.classList.add('images');
     divforImg.insertAdjacentElement('beforebegin', resolve);
-    wait(2).then(() => {
-      console.log((resolve.style.display = 'none'));
-    });
+    wait(2)
+      .then(() => {
+        resolve.style.display = 'none';
+        resolve.src = 'img/img-2.jpg';
+        resolve.style.display = 'flex';
+        console.log(resolve);
+        return resolve;
+      })
+      .then(resolve => {
+        wait(2).then(() => (resolve.style.display = 'none'));
+      });
   })
   .catch(err => console.log(err));
