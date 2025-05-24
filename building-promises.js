@@ -4,7 +4,7 @@
 // By creating promise we have to pass executor(callback) function
 // which takes two parameters resolve and reject
 // Resolve parameter is used when the statment is fullfieled
-// Reject when its not
+// Reject when its not fullfieled.
 
 const lotteryPromise = new Promise(function (resolve, reject) {
   console.log('Lottery draw is happening !!!');
