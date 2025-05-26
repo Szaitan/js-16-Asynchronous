@@ -5,8 +5,8 @@ const geocodeCode = '148615786301788546690x120270';
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
-// Async and await are the suger coat for the promise/then
-// Its important that we can use await only in async function which has to be declared !!!
+////////////////////////////////////////////////////////////////
+// To catch errors we use try {} witch catch (){} construction
 
 const getPosition = function () {
   return new Promise(function (resolve, reject) {
@@ -34,18 +34,37 @@ const renderCountry = function (data, neighbour = '') {
   countriesContainer.insertAdjacentHTML('beforeend', html);
 };
 
+const renderErrorMessage = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+};
+
 const whereAmI = async function () {
-  const myPosition = await getPosition();
-  const { latitude: lat, longitude: lng } = myPosition.coords;
-  const countryData = await fetch(
-    `https://geocode.xyz/${lat},${lng}?geoit=json&auth=${geocodeCode}`
-  );
-  const data = await countryData.json();
-  const res = await fetch(`https://restcountries.com/v2/name/${data.country}`);
-  const finalData = await res.json();
-  console.log(finalData[0]);
-  renderCountry(finalData[0]);
-  countriesContainer.style.opacity = 1;
+  try {
+    const myPosition = await getPosition();
+    const { latitude: lat, longitude: lng } = myPosition.coords;
+
+    const countryData = await fetch(
+      `https://geocode.xyz/${lat},${lng}?geoit=json&auth=${geocodeCode}`
+    );
+    if (!countryData.ok) {
+      new Error('There is a problem with your position data.');
+    }
+    const data = await countryData.json();
+
+    const res = await fetch(
+      `https://restcountries.com/v2/name/${data.country}`
+    );
+    if (!res.ok) {
+      ('There is a problem with your country data.');
+    }
+    const finalData = await res.json();
+    console.log(finalData[0]);
+    renderCountry(finalData[0]);
+    countriesContainer.style.opacity = 1;
+  } catch (err) {
+    console.log(`${err}`);
+    renderErrorMessage(err);
+  }
 };
 
 btn.addEventListener('click', function () {
