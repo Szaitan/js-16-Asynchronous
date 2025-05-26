@@ -60,10 +60,11 @@ const whereAmI = async function () {
     const finalData = await res.json();
     console.log(finalData[0]);
     renderCountry(finalData[0]);
-    countriesContainer.style.opacity = 1;
   } catch (err) {
     console.log(`${err}`);
     renderErrorMessage(err);
+  } finally {
+    countriesContainer.style.opacity = 1;
   }
 };
 
