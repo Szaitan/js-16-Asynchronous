@@ -52,20 +52,18 @@ const whereAmI = async function () {
     const data = await countryData.json();
 
     const res = await fetch(
-      `https://restcountries.com/v2/name/${data.country}`
+      `https://restcountries.com/v2/name/${data.countrygggggg}`
     );
     if (!res.ok) {
       ('There is a problem with your country data.');
     }
     const finalData = await res.json();
-    console.log(finalData[0]);
     renderCountry(finalData[0]);
 
     // to return value from functions we simply use return
     // however we have to remember that we have to use .await outside
-    return `You are in country ${finalData.country}, in ${finalData.city}.`;
+    return `You are in country ${finalData[0].name}, in ${finalData[0].capital}.`;
   } catch (err) {
-    console.log(`${err}`);
     renderErrorMessage(err);
     throw new Error(`2: ${err}`);
   } finally {
