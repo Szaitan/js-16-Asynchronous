@@ -65,6 +65,8 @@ const whereAmI = async function () {
     return `You are in country ${finalData[0].name}, in ${finalData[0].capital}.`;
   } catch (err) {
     renderErrorMessage(err);
+
+    // For error we have to throw new error
     throw new Error(`2: ${err}`);
   } finally {
     countriesContainer.style.opacity = 1;
