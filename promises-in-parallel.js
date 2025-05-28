@@ -17,18 +17,28 @@ const getJSON = function (url, errorMsg = 'Something went wrong') {
   });
 };
 
-const getDataForThreeCountries = function (c1, c2, c3) {
+const getDataForThreeCountries = async function (c1, c2, c3) {
   try {
-    const datas = Promise.all([
-      getJSON(`https://restcountries.com/v2/name/${c1}`, 'Country not found'),
-      getJSON(`https://restcountries.com/v2/name/${c2}`, 'Country not found'),
+    const datas = await Promise.all([
+      getJSON(
+        `https://restcountries.com/v2/name/${c1}`,
+        'Country not found'
+      ).then(result => {
+        return result;
+      }),
+      getJSON(
+        `https://restcountries.com/v2/name/${c2}`,
+        'Country not found'
+      ).then(result => {
+        return result;
+      }),
+
       getJSON(`https://restcountries.com/v2/name/${c3}`, 'Country not found'),
     ]);
-    return datas;
+    console.log(datas);
   } catch (err) {
     console.log(err);
   }
 };
 
-getDataForThreeCountries('poland', 'germany', 'italy');
-console.log();
+const dataC = getDataForThreeCountries('poland', 'germany', 'italy');
