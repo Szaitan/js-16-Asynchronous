@@ -35,7 +35,11 @@ const getDataForThreeCountries = async function (c1, c2, c3) {
 
       getJSON(`https://restcountries.com/v2/name/${c3}`, 'Country not found'),
     ]);
-    console.log(datas);
+    console.log(
+      datas.map(data => {
+        return data[0].name;
+      })
+    );
   } catch (err) {
     console.log(err);
   }
