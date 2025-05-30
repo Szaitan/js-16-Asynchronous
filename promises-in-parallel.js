@@ -20,19 +20,8 @@ const getJSON = function (url, errorMsg = 'Something went wrong') {
 const getDataForThreeCountries = async function (c1, c2, c3) {
   try {
     const datas = await Promise.all([
-      getJSON(
-        `https://restcountries.com/v2/name/${c1}`,
-        'Country not found'
-      ).then(result => {
-        return result;
-      }),
-      getJSON(
-        `https://restcountries.com/v2/name/${c2}`,
-        'Country not found'
-      ).then(result => {
-        return result;
-      }),
-
+      getJSON(`https://restcountries.com/v2/name/${c1}`, 'Country not found'),
+      getJSON(`https://restcountries.com/v2/name/${c2}`, 'Country not found'),
       getJSON(`https://restcountries.com/v2/name/${c3}`, 'Country not found'),
     ]);
     console.log(
