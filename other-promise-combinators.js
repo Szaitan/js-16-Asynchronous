@@ -5,7 +5,7 @@
 
 // race - Creates a Promise that is resolved or rejected when any of the provided Promises are resolved or rejected.
 
-// allSettled - Which will return a list with all promises that are fullfieled. Short circut(error) will not be involed.
+// allSettled - Creates a Promise that is resolved with an array of results when all of the provided Promises resolve or reject.
 
 // any - Which will return first fullfield promise, but rejected promises are ignored.
 
@@ -30,8 +30,8 @@ const getJSON = function (url, errorMsg = 'Something went wrong') {
 const timeOut = function (sec) {
   return new Promise(function (_, reject) {
     setTimeout(function () {
-      reject(new Error('request took to long.'), sec * 1000);
-    });
+      reject(new Error('request took too long.'));
+    }, sec * 1000);
   });
 };
 
@@ -48,4 +48,15 @@ Promise.allSettled([
   Promise.resolve('Success'),
   Promise.reject('Error'),
   Promise.resolve('Another success'),
-]);
+])
+  .then(res => console.log(res))
+  .catch(err => console.log(err));
+
+// Promise.any
+Promise.any([
+  Promise.resolve('Success'),
+  Promise.reject('Error'),
+  Promise.resolve('Another success'),
+])
+  .then(res => console.log(res))
+  .catch(err => console.log(err));
