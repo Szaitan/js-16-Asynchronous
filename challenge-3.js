@@ -13,7 +13,9 @@ function createImage(imgPath) {
     const newImage = document.createElement('img');
     newImage.src = imgPath;
     newImage.classList.add('images');
-    resolve(newImage);
+    newImage.addEventListener('load', function () {
+      resolve(newImage);
+    });
   });
 }
 
@@ -41,11 +43,11 @@ function createImage(imgPath) {
 // }
 
 async function loadAll(list) {
-  const imgs = await Promise.all([
-    createImage(list[0]),
-    createImage(list[1]),
-    createImage(list[2]),
-  ]);
+  const imgs = await Promise.all(
+    list.map(path => {
+      return createImage(path);
+    })
+  );
   console.log(imgs);
   imgs.map(x => {
     x.classList.add('parallel');
