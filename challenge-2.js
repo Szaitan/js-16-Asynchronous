@@ -9,7 +9,7 @@ const wait = function (seconds) {
 };
 
 function createImage(imgPath) {
-  return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve, _) {
     const newImage = document.createElement('img');
     newImage.src = imgPath;
     resolve(newImage);
